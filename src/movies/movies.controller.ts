@@ -9,33 +9,37 @@ import {
   Put,
   Query,
 } from '@nestjs/common';
+import { Movie } from './entities/movie.entity';
+import { MoviesService } from './movies.service';
 
 // controller 뒤에 있는 부분은 url을 담당하는 것임
 @Controller('movies')
 export class MoviesController {
+  constructor(private readonly moviesService: MoviesService) {}
+
   @Get()
-  getAll(): string {
-    return 'This will return all movies';
+  getAll(): Movie[] {
+    return this.moviesService.getAll();
   }
 
-  @Get('search')
-  search(@Query('year') searchingYear: string) {
-    return `We are searching with a movie made after : ${searchingYear}`;
-  }
+  // @Get('search')
+  // search(@Query('year') searchingYear: string) {
+  //   return `We are searching with a movie made after : ${searchingYear}`;
+  // }
 
   @Get('/:id')
-  getOne(@Param('id') movieID: string) {
-    return `This will return one movie with the id: ${movieID}`;
+  getOne(@Param('id') movieID: string): Movie {
+    return this.moviesService.getOne(movieID);
   }
 
   @Post()
   create(@Body() movieData) {
-    return movieData;
+    return this.moviesService.create(movieData);
   }
 
   @Delete(':/id')
   deleteMovie(@Param('id') movieID: string) {
-    return `this will delete a movie with the id: ${movieID}`;
+    return this.moviesService.deleteOne(movieID);
   }
 
   // 모든 리소스를 업데이트 하고 싶으면 put, 일부만 업데이트 하고 싶으면 patch
