@@ -30,7 +30,7 @@ export class MoviesController {
   // }
 
   @Get('/:id')
-  getOne(@Param('id') movieID: string): Movie {
+  getOne(@Param('id') movieID: number): Movie {
     return this.moviesService.getOne(movieID);
   }
 
@@ -40,13 +40,13 @@ export class MoviesController {
   }
 
   @Delete(':/id')
-  deleteMovie(@Param('id') movieID: string) {
+  deleteMovie(@Param('id') movieID: number) {
     return this.moviesService.deleteOne(movieID);
   }
 
   // 모든 리소스를 업데이트 하고 싶으면 put, 일부만 업데이트 하고 싶으면 patch
   @Patch('/:id')
-  path(@Param('id') movieID: string, @Body() updateData) {
+  path(@Param('id') movieID: number, @Body() updateData) {
     // return {
     //   updatedMovie: movieID,
     //   ...updateData,
