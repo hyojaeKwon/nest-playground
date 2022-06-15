@@ -3,12 +3,14 @@ import {
   Controller,
   Delete,
   Get,
+  NotFoundException,
   Param,
   Patch,
   Post,
   Put,
   Query,
 } from '@nestjs/common';
+import { CreateMoiveDto } from './dto/create-movie.dto';
 import { Movie } from './entities/movie.entity';
 import { MoviesService } from './movies.service';
 
@@ -33,7 +35,7 @@ export class MoviesController {
   }
 
   @Post()
-  create(@Body() movieData) {
+  create(@Body() movieData: CreateMoiveDto) {
     return this.moviesService.create(movieData);
   }
 
@@ -45,9 +47,10 @@ export class MoviesController {
   // 모든 리소스를 업데이트 하고 싶으면 put, 일부만 업데이트 하고 싶으면 patch
   @Patch('/:id')
   path(@Param('id') movieID: string, @Body() updateData) {
-    return {
-      updatedMovie: movieID,
-      ...updateData,
-    };
+    // return {
+    //   updatedMovie: movieID,
+    //   ...updateData,
+    // };
+    return this.moviesService.update(movieID, updateData);
   }
 }
