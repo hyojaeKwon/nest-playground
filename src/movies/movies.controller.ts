@@ -11,6 +11,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { CreateMoiveDto } from './dto/create-movie.dto';
+import { UpdateMoiveDto } from './dto/update-movie.dto';
 import { Movie } from './entities/movie.entity';
 import { MoviesService } from './movies.service';
 
@@ -46,7 +47,7 @@ export class MoviesController {
 
   // 모든 리소스를 업데이트 하고 싶으면 put, 일부만 업데이트 하고 싶으면 patch
   @Patch('/:id')
-  path(@Param('id') movieID: number, @Body() updateData) {
+  path(@Param('id') movieID: number, @Body() updateData: UpdateMoiveDto) {
     // return {
     //   updatedMovie: movieID,
     //   ...updateData,
